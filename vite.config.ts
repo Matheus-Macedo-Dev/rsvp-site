@@ -5,7 +5,10 @@ import vuetify from 'vite-plugin-vuetify'
 // https://vite.dev/config/
 export default defineConfig({
   base: '/rsvp-site/', // Update this to match your repository name
-  plugins: [vue(), vuetify()],
+  plugins: [
+    vue(),
+    vuetify({ autoImport: true }), // Enabled by default
+  ],
   build: {
     target: 'esnext',
     minify: 'terser',
@@ -17,5 +20,10 @@ export default defineConfig({
         }
       }
     }
-  }
+  },
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
 })
