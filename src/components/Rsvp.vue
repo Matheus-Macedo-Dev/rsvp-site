@@ -123,43 +123,49 @@ const handleChangeRSVP = () => {
         <v-card class="mx-auto pa-6" elevation="3" min-height="400px">
           <!-- Search Section -->
           <v-card-item>
-            <v-card-title class="text-h3 text-center mb-6">
+            <!-- Only show title if no guest is selected -->
+            <v-card-title v-if="!selectedGuest" class="text-h3 text-center mb-6">
               Confirme sua Presença
             </v-card-title>
             <v-card-text>
-              <SearchBox
-                v-model="searchQuery"
-                placeholder="Seu nome aqui..."
-                :disabled="isLoading"
-              />
-
+              <!-- Only show search box if no guest is selected -->
               <v-slide-y-transition>
-                <template v-if="searchQuery && searchQuery.length >= 3">
-                  <div class="mt-4">
-                    <GuestList
-                      v-if="filteredGuests.length > 0 && showGuestList"
-                      :guests="filteredGuests"
-                      @select="handleGuestSelect"
-                    />
-                    <v-alert
-                      v-else
-                      type="info"
-                      variant="tonal"
-                      class="mt-4"
-                    >
-                      No matching guests found
-                    </v-alert>
-                  </div>
-                </template>
-                <template v-else-if="searchQuery && searchQuery.length < 3">
-                  <v-alert
-                    type="info"
-                    variant="tonal"
-                    class="mt-4"
-                  >
-                    Digite pelo menos 3 caracteres para buscar
-                  </v-alert>
-                </template>
+                <div v-if="!selectedGuest">
+                  <SearchBox
+                    v-model="searchQuery"
+                    placeholder="Seu nome aqui..."
+                    :disabled="isLoading"
+                  />
+
+                  <v-slide-y-transition>
+                    <template v-if="searchQuery && searchQuery.length >= 3">
+                      <div class="mt-4">
+                        <GuestList
+                          v-if="filteredGuests.length > 0 && showGuestList"
+                          :guests="filteredGuests"
+                          @select="handleGuestSelect"
+                        />
+                        <v-alert
+                          v-else
+                          type="info"
+                          variant="tonal"
+                          class="mt-4"
+                        >
+                          No matching guests found
+                        </v-alert>
+                      </div>
+                    </template>
+                    <template v-else-if="searchQuery && searchQuery.length < 3">
+                      <v-alert
+                        type="info"
+                        variant="tonal"
+                        class="mt-4"
+                      >
+                        Digite pelo menos 3 caracteres para buscar
+                      </v-alert>
+                    </template>
+                  </v-slide-y-transition>
+                </div>
               </v-slide-y-transition>
             </v-card-text>
           </v-card-item>
