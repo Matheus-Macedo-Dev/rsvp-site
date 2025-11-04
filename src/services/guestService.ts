@@ -43,14 +43,22 @@ export async function fetchGuests(): Promise<GuestResponse[]> {
 
     const data = await response.json()
     console.log('API Response:', data)
-    return data.guests.map((guest: any) => ({
-      id: guest.id,
-      name: guest.Nome || guest.name,
-      hasResponded: Boolean(guest.Respondeu || guest.hasResponded),
-      isAttending: Boolean(guest.Confirmado || guest.isAttending),
-      responseDate: guest.Data || guest.responseDate,
-      message: guest.Mensagem || guest.message || ''
-    }))
+    console.log('First guest raw data:', data.guests[0])
+    
+    const mappedGuests = data.guests.map((guest: any) => {
+      const mapped = {
+        id: guest.id,
+        name: guest.Nome || guest.name,
+        hasResponded: Boolean(guest.Respondeu || guest.hasResponded),
+        isAttending: Boolean(guest.Confirmado || guest.isAttending),
+        responseDate: guest.Data || guest.responseDate,
+        message: guest.Mensagem || guest.message || ''
+      }
+      console.log('Mapped guest:', mapped)
+      return mapped
+    })
+    
+    return mappedGuests
   } catch (error) {
     console.error('Error fetching guests:', error)
     throw error
