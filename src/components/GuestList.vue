@@ -33,7 +33,7 @@ const emit = defineEmits<{
 
         <template v-slot:append>
           <v-icon
-            :color="guest.hasResponded ? 'success' : 'primary'"
+            :color="guest.hasResponded ? 'success' : '#007aff'"
             size="24"
           >
             {{ guest.hasResponded ? 'mdi-check-circle' : 'mdi-clock-outline' }}
@@ -47,6 +47,7 @@ const emit = defineEmits<{
 <style scoped>
 .guest-list-container {
   width: 100%;
+  overflow-x: hidden;
 }
 
 .guest-list-header {
@@ -55,6 +56,7 @@ const emit = defineEmits<{
   align-items: center;
   padding: 12px 16px;
   border-bottom: 2px solid #e0e0e0;
+  width: 100%;
 }
 
 .header-label {
@@ -63,16 +65,13 @@ const emit = defineEmits<{
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 600;
-}
-
-.header-label:last-child {
-  width: 40px;
-  text-align: center;
+  white-space: nowrap;
 }
 
 .guest-list {
   padding: 0;
   background: transparent;
+  width: 100%;
 }
 
 .guest-item {
@@ -82,6 +81,8 @@ const emit = defineEmits<{
   transition: background-color 0.2s ease;
   display: flex;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .guest-item:last-child {
@@ -103,9 +104,9 @@ const emit = defineEmits<{
 :deep(.v-list-item__append) {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  margin-left: 0;
+  justify-content: flex-end;
+  margin-left: auto;
+  padding-left: 16px;
 }
 
 @media (max-width: 600px) {

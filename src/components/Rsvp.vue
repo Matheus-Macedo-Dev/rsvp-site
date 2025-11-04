@@ -7,6 +7,9 @@ import GuestList from './GuestList.vue'
 import RsvpConfirmation from './RsvpConfirmation.vue'
 import ResponseMessage from './ResponseMessage.vue'
 
+// Background image path
+const backgroundImage = '/wedding-background.jpg'
+
 const guestList = ref<Guest[]>([])
 const isLoading = ref(false)
 const error = ref<string | null>(null)
@@ -115,52 +118,57 @@ const handleChangeRSVP = () => {
           {{ error }}
         </v-alert>
 
-        <!-- Header with Initials -->
-        <div class="header-initials">AM</div>
+        <!-- Header with Logo -->
+        <div class="header-logo">
+          <img src="/wedding-logo.jpg" alt="AM Logo" class="logo-image" />
+        </div>
 
         <!-- Main Card -->
         <v-card class="rsvp-card" elevation="0">
+          <div class="card-content">
           <!-- Search Section -->
           <template v-if="!selectedGuest">
-            <v-card-title class="rsvp-title">
-              Confirme sua presença
-            </v-card-title>
-            <v-card-text class="pa-6">
-              <SearchBox
-                v-model="searchQuery"
-                placeholder="Confirme sua presença"
-                :disabled="isLoading"
-              />
+            <div class="search-card">
+              <v-card-title class="rsvp-title">
+                Confirme sua presença
+              </v-card-title>
+              <v-card-text class="pa-6">
+                <SearchBox
+                  v-model="searchQuery"
+                  placeholder="Confirme sua presença"
+                  :disabled="isLoading"
+                />
 
-              <v-slide-y-transition>
-                <template v-if="searchQuery && searchQuery.length >= 3">
-                  <div class="mt-4">
-                    <GuestList
-                      v-if="filteredGuests.length > 0 && showGuestList"
-                      :guests="filteredGuests"
-                      @select="handleGuestSelect"
-                    />
+                <v-slide-y-transition>
+                  <template v-if="searchQuery && searchQuery.length >= 3">
+                    <div class="mt-4">
+                      <GuestList
+                        v-if="filteredGuests.length > 0 && showGuestList"
+                        :guests="filteredGuests"
+                        @select="handleGuestSelect"
+                      />
+                      <v-alert
+                        v-else
+                        type="info"
+                        variant="tonal"
+                        class="mt-4"
+                      >
+                        Nenhum convidado encontrado
+                      </v-alert>
+                    </div>
+                  </template>
+                  <template v-else-if="searchQuery && searchQuery.length < 3">
                     <v-alert
-                      v-else
                       type="info"
                       variant="tonal"
                       class="mt-4"
                     >
-                      Nenhum convidado encontrado
+                      Digite pelo menos 3 caracteres para buscar
                     </v-alert>
-                  </div>
-                </template>
-                <template v-else-if="searchQuery && searchQuery.length < 3">
-                  <v-alert
-                    type="info"
-                    variant="tonal"
-                    class="mt-4"
-                  >
-                    Digite pelo menos 3 caracteres para buscar
-                  </v-alert>
-                </template>
-              </v-slide-y-transition>
-            </v-card-text>
+                  </template>
+                </v-slide-y-transition>
+              </v-card-text>
+            </div>
           </template>
 
           <!-- RSVP Confirmation -->
@@ -183,6 +191,7 @@ const handleChangeRSVP = () => {
               />
             </div>
           </v-slide-y-transition>
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -192,18 +201,33 @@ const handleChangeRSVP = () => {
 <style scoped>
 .rsvp-container {
   min-height: 100vh;
-  padding: 2rem 1rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 0;
+  background: transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.header-initials {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  font-weight: 400;
+.rsvp-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+.header-logo {
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 2rem;
-  letter-spacing: 0.2em;
+  padding: 2rem 1rem 1rem;
+  background: transparent;
+  width: 100%;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.logo-image {
+  max-width: 200px;
+  height: auto;
+  display: inline-block;
+  background: transparent;
 }
 
 .rsvp-card {
@@ -211,6 +235,25 @@ const handleChangeRSVP = () => {
   border-radius: 0;
   overflow: visible;
   box-shadow: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-content {
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 120px);
+}
+
+.search-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .rsvp-title {
@@ -224,12 +267,20 @@ const handleChangeRSVP = () => {
 
 @media (max-width: 600px) {
   .rsvp-container {
-    padding: 1rem 0.5rem;
+    padding: 0;
   }
 
-  .header-initials {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+  .header-logo {
+    padding: 1.5rem 1rem;
+  }
+
+  .logo-image {
+    max-width: 150px;
+  }
+
+  .card-content {
+    padding: 1rem 0.5rem;
+    min-height: calc(100vh - 100px);
   }
 
   .rsvp-title {

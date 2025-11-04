@@ -9,24 +9,10 @@ const emit = defineEmits<{
   (e: 'reset'): void
   (e: 'change'): void
 }>()
-
-const handleImageError = (event: Event) => {
-  console.error('Failed to load wedding image:', event)
-}
 </script>
 
 <template>
   <div class="response-container">
-    <!-- Decorative Image -->
-    <div class="decorative-image">
-      <img 
-        :src="guest.isAttending ? '/wedding-attending.png' : '/wedding-not-attending.png'"
-        :alt="guest.isAttending ? 'Casal celebrando' : 'Casal triste'"
-        class="wedding-image"
-        @error="handleImageError"
-      />
-    </div>
-
     <!-- Message Card -->
     <v-card class="response-card" elevation="0">
       <v-card-text class="text-center pa-6">
@@ -79,21 +65,6 @@ const handleImageError = (event: Event) => {
 <style scoped>
 .response-container {
   width: 100%;
-}
-
-.decorative-image {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
-}
-
-.wedding-image {
-  width: 100%;
-  max-width: 300px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .response-card {
@@ -158,28 +129,28 @@ const handleImageError = (event: Event) => {
   text-transform: none;
   font-size: 1rem;
   letter-spacing: normal;
-  border-radius: 24px;
+  border-radius: 8px;
   box-shadow: none;
 }
 
 .btn-alterar {
-  background: rgba(76, 175, 80, 0.15) !important;
-  color: #4caf50 !important;
+  background: #d9f1dd !important;
+  color: #00771e !important;
   border: none;
 }
 
 .btn-alterar:hover {
-  background: rgba(76, 175, 80, 0.25) !important;
+  background: #7ab67f !important;
 }
 
 .btn-buscar {
-  background: rgba(66, 184, 131, 0.15) !important;
-  color: #42b883 !important;
+  background: #d9ebff !important;
+  color: #298fff !important;
   border: none;
 }
 
 .btn-buscar:hover {
-  background: rgba(66, 184, 131, 0.25) !important;
+  background: #6fb3d8 !important;
 }
 
 @media (max-width: 600px) {

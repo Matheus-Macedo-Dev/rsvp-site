@@ -11,160 +11,130 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <v-card class="mx-auto confirmation-card" max-width="600">
-    <v-card-text class="text-center py-4">
-      <v-avatar size="80" color="primary" class="mb-4">
-        <v-icon size="40" color="white">mdi-account</v-icon>
-      </v-avatar>
-      <h2 class="text-h4 mb-2">Olá, {{ guest.name }}!</h2>
-      
-      <v-alert
-        v-if="guest.message"
-        type="info"
-        variant="tonal"
-        class="my-4 personalized-message"
-        icon="mdi-message-text"
-      >
-        {{ guest.message }}
-      </v-alert>
-      
-      <p class="text-subtitle-1">Você irá comparecer ao evento?</p>
-      
-      <v-card-actions class="justify-center mt-4 button-container">
-        <v-btn
-          color="success"
-          variant="elevated"
-          size="large"
-          prepend-icon="mdi-check"
-          class="rsvp-btn mx-2"
-          @click="emit('respond', true, guest.name)"
-        >
-          Sim, Estarei lá
-        </v-btn>
+  <div class="confirmation-container">
+    <v-card class="confirmation-card" elevation="0">
+      <v-card-text class="text-center pa-6">
+        <h2 class="confirmation-title">Olá, {{ guest.name }}!</h2>
         
-        <v-btn
-          color="error"
-          variant="elevated"
-          size="large"
-          prepend-icon="mdi-close"
-          class="rsvp-btn mx-2"
-          @click="emit('respond', false, guest.name)"
+        <v-alert
+          v-if="guest.message"
+          type="info"
+          variant="tonal"
+          class="my-4 personalized-message"
+          icon="mdi-message-text"
         >
-          Não Poderei Ir
-        </v-btn>
-      </v-card-actions>
-    </v-card-text>
-  </v-card>
+          {{ guest.message }}
+        </v-alert>
+        
+        <p class="confirmation-question">Você irá comparecer ao evento?</p>
+        
+        <div class="button-group">
+          <v-btn
+            class="action-btn btn-yes"
+            @click="emit('respond', true, guest.name)"
+          >
+            Sim, Estarei lá
+          </v-btn>
+          
+          <v-btn
+            class="action-btn btn-no"
+            @click="emit('respond', false, guest.name)"
+          >
+            Não Poderei Ir
+          </v-btn>
+        </div>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <style scoped>
-.confirmation-section {
-  text-align: center;
-  margin: 2rem 0;
-  padding: 2rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+.confirmation-container {
+  width: 100%;
 }
 
-.button-container {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
+.confirmation-card {
+  background: white;
+  border-radius: 16px;
 }
 
-.rsvp-btn {
-  min-width: 180px;
-  white-space: normal;
-  height: auto !important;
-  padding: 12px 20px !important;
-  line-height: 1.4;
+.confirmation-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-question {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 2rem;
 }
 
 .personalized-message {
   text-align: left;
   font-size: 1rem;
   line-height: 1.5;
+  margin: 1.5rem 0;
 }
 
 .button-group {
   display: flex;
+  flex-direction: row;
   gap: 1rem;
+  margin-top: 2rem;
   justify-content: center;
-  margin-top: 1rem;
 }
 
-.btn {
-  padding: 0.75rem 1.5rem;
+.action-btn {
+  flex: 1;
+  max-width: 180px;
+  height: 48px;
+  text-transform: none;
+  font-size: 1rem;
+  letter-spacing: normal;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.btn-yes {
+  background: #d9f1dd !important;
+  color: #00771e !important;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: transform 0.1s ease;
 }
 
-.btn:active {
-  transform: scale(0.98);
+.btn-yes:hover {
+  background: #c4e7ca !important;
 }
 
-.btn-accept {
-  background-color: #42b883;
-  color: white;
+.btn-no {
+  background: #ffd9d9 !important;
+  color: #c41e3a !important;
+  border: none;
 }
 
-.btn-decline {
-  background-color: #dc3545;
-  color: white;
+.btn-no:hover {
+  background: #ffbfbf !important;
 }
 
-/* Mobile-specific styles */
 @media (max-width: 600px) {
-  .confirmation-card {
-    max-width: 100%;
+  .confirmation-title {
+    font-size: 1.5rem;
   }
 
-  :deep(.v-card-text) {
-    padding: 1.5rem 1rem !important;
-  }
-
-  :deep(.v-avatar) {
-    width: 64px !important;
-    height: 64px !important;
-    margin-bottom: 1rem !important;
-  }
-
-  :deep(.v-avatar .v-icon) {
-    font-size: 32px !important;
-  }
-
-  :deep(.text-h4) {
-    font-size: 1.5rem !important;
-    margin-bottom: 0.75rem !important;
-  }
-
-  :deep(.text-subtitle-1) {
-    font-size: 1rem !important;
-  }
-
-  :deep(.v-card-actions) {
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 0 !important;
-  }
-
-  .rsvp-btn,
-  :deep(.v-btn) {
-    width: 100%;
-    min-height: 56px;
-    margin: 0 !important;
+  .confirmation-question {
     font-size: 0.95rem;
-    padding: 14px 16px !important;
-    white-space: normal;
-    height: auto !important;
   }
 
-  :deep(.v-btn .v-icon) {
-    font-size: 20px;
+  .button-group {
+    gap: 0.75rem;
+  }
+
+  .action-btn {
+    max-width: 160px;
+    font-size: 0.9rem;
   }
 }
 </style>
