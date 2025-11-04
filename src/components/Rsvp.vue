@@ -201,17 +201,8 @@ const handleChangeRSVP = () => {
 <style scoped>
 .rsvp-container {
   min-height: 100vh;
-  padding: 0;
-  background: transparent;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.rsvp-container > * {
-  position: relative;
-  z-index: 1;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .header-logo {
@@ -247,6 +238,13 @@ const handleChangeRSVP = () => {
   flex-direction: column;
   justify-content: center;
   min-height: calc(100vh - 120px);
+}
+
+.search-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .search-card {
