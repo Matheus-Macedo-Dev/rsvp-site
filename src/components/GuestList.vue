@@ -47,6 +47,7 @@ const emit = defineEmits<{
 <style scoped>
 .guest-list-container {
   width: 100%;
+  overflow-x: hidden;
 }
 
 .guest-list-header {
@@ -55,6 +56,7 @@ const emit = defineEmits<{
   align-items: center;
   padding: 12px 16px;
   border-bottom: 2px solid #e0e0e0;
+  width: 100%;
 }
 
 .header-label {
@@ -69,6 +71,7 @@ const emit = defineEmits<{
 .guest-list {
   padding: 0;
   background: transparent;
+  width: 100%;
 }
 
 .guest-item {
@@ -78,6 +81,8 @@ const emit = defineEmits<{
   transition: background-color 0.2s ease;
   display: flex;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .guest-item:last-child {

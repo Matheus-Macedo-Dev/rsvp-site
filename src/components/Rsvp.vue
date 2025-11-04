@@ -125,45 +125,47 @@ const handleChangeRSVP = () => {
         <v-card class="rsvp-card" elevation="0">
           <!-- Search Section -->
           <template v-if="!selectedGuest">
-            <v-card-title class="rsvp-title">
-              Confirme sua presença
-            </v-card-title>
-            <v-card-text class="pa-6">
-              <SearchBox
-                v-model="searchQuery"
-                placeholder="Confirme sua presença"
-                :disabled="isLoading"
-              />
+            <div class="search-card">
+              <v-card-title class="rsvp-title">
+                Confirme sua presença
+              </v-card-title>
+              <v-card-text class="pa-6">
+                <SearchBox
+                  v-model="searchQuery"
+                  placeholder="Confirme sua presença"
+                  :disabled="isLoading"
+                />
 
-              <v-slide-y-transition>
-                <template v-if="searchQuery && searchQuery.length >= 3">
-                  <div class="mt-4">
-                    <GuestList
-                      v-if="filteredGuests.length > 0 && showGuestList"
-                      :guests="filteredGuests"
-                      @select="handleGuestSelect"
-                    />
+                <v-slide-y-transition>
+                  <template v-if="searchQuery && searchQuery.length >= 3">
+                    <div class="mt-4">
+                      <GuestList
+                        v-if="filteredGuests.length > 0 && showGuestList"
+                        :guests="filteredGuests"
+                        @select="handleGuestSelect"
+                      />
+                      <v-alert
+                        v-else
+                        type="info"
+                        variant="tonal"
+                        class="mt-4"
+                      >
+                        Nenhum convidado encontrado
+                      </v-alert>
+                    </div>
+                  </template>
+                  <template v-else-if="searchQuery && searchQuery.length < 3">
                     <v-alert
-                      v-else
                       type="info"
                       variant="tonal"
                       class="mt-4"
                     >
-                      Nenhum convidado encontrado
+                      Digite pelo menos 3 caracteres para buscar
                     </v-alert>
-                  </div>
-                </template>
-                <template v-else-if="searchQuery && searchQuery.length < 3">
-                  <v-alert
-                    type="info"
-                    variant="tonal"
-                    class="mt-4"
-                  >
-                    Digite pelo menos 3 caracteres para buscar
-                  </v-alert>
-                </template>
-              </v-slide-y-transition>
-            </v-card-text>
+                  </template>
+                </v-slide-y-transition>
+              </v-card-text>
+            </div>
           </template>
 
           <!-- RSVP Confirmation -->
@@ -220,6 +222,13 @@ const handleChangeRSVP = () => {
   border-radius: 0;
   overflow: visible;
   box-shadow: none;
+}
+
+.search-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .rsvp-title {
