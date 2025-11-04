@@ -3,7 +3,6 @@ import type { Guest } from '../types/guest'
 
 defineProps<{
   guests: Guest[]
-  hasResponded?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -12,94 +11,118 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <v-card class="guest-list-card mt-2" elevation="2">
-    <v-list>
+  <div class="guest-list-container">
+    <!-- Header Row -->
+    <div class="guest-list-header">
+      <span class="header-label">Nome</span>
+      <span class="header-label">Resposta</span>
+    </div>
+
+    <!-- Guest List -->
+    <v-list class="guest-list">
       <v-list-item
         v-for="guest in guests"
         :key="guest.id"
         :value="guest"
         @click="emit('select', guest)"
-        :class="{ 'has-responded': guest.hasResponded }"
         class="guest-item"
       >
-        <template v-slot:prepend>
-          <v-icon :color="guest.hasResponded ? 'success' : 'grey'">
-            {{ guest.hasResponded ? 'mdi-check-circle' : 'mdi-account' }}
-          </v-icon>
-        </template>
-
-        <v-list-item-title class="text-subtitle-1 guest-name">
+        <v-list-item-title class="guest-name">
           {{ guest.name }}
         </v-list-item-title>
+
+        <template v-slot:append>
+          <v-icon
+            :color="guest.hasResponded ? 'success' : 'primary'"
+            size="24"
+          >
+            {{ guest.hasResponded ? 'mdi-check-circle' : 'mdi-clock-outline' }}
+          </v-icon>
+        </template>
       </v-list-item>
     </v-list>
-  </v-card>
+  </div>
 </template>
 
 <style scoped>
-.guest-list-card {
+.guest-list-container {
   width: 100%;
-  max-height: 300px;
-  overflow-y: auto;
+}
+
+.guest-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.header-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.header-label:last-child {
+  width: 40px;
+  text-align: center;
+}
+
+.guest-list {
+  padding: 0;
+  background: transparent;
 }
 
 .guest-item {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px;
+  cursor: pointer;
   transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.guest-item:last-child {
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .guest-item:hover {
-  background-color: rgb(var(--v-theme-primary), 0.1);
-}
-
-.has-responded {
-  background-color: rgb(var(--v-theme-surface-variant));
+  background-color: #f8f9fa;
 }
 
 .guest-name {
-  white-space: normal;
-  word-wrap: break-word;
-  line-height: 1.3;
-  padding-right: 0.5rem;
+  font-size: 1rem;
+  color: #2c3e50;
+  font-weight: 500;
+  flex: 1;
+  text-align: left;
 }
 
-:deep(.v-list-item__content) {
-  font-size: 1.1rem;
-  overflow: visible !important;
+:deep(.v-list-item__append) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  margin-left: 0;
 }
 
-/* Mobile-specific styles */
 @media (max-width: 600px) {
-  .guest-list-card {
-    max-height: 200px;
+  .guest-list-header {
+    padding: 10px 12px;
+  }
+
+  .header-label {
+    font-size: 0.7rem;
   }
 
   .guest-item {
-    min-height: 56px;
-    padding: 0.75rem 0.5rem;
+    padding: 12px;
   }
 
   .guest-name {
-    font-size: 0.95rem;
-    line-height: 1.3;
-  }
-
-  :deep(.v-list-item__content) {
-    font-size: 1rem;
-    flex: 1;
-    min-width: 0;
-  }
-
-  :deep(.v-list-item-title) {
-    font-size: 0.95rem !important;
-  }
-
-  :deep(.v-chip) {
-    font-size: 0.75rem;
-    height: 24px;
-  }
-
-  :deep(.v-icon) {
-    font-size: 20px;
+    font-size: 0.9rem;
   }
 }
 </style>

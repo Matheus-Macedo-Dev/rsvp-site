@@ -29,7 +29,6 @@ onMounted(async () => {
 
 const filteredGuests = computed(() => {
   const query = searchQuery.value.toLowerCase().trim()
-  // Only search when 3 or more characters are entered
   if (!query || query.length < 3) return []
   return guestList.value.filter(guest => 
     guest.name?.toLowerCase().includes(query)
@@ -38,7 +37,6 @@ const filteredGuests = computed(() => {
 
 const showGuestList = ref(true)
 
-// Show guest list when user starts typing
 watch(searchQuery, (newValue) => {
   if (newValue.trim()) {
     showGuestList.value = true
@@ -48,8 +46,8 @@ watch(searchQuery, (newValue) => {
 const handleGuestSelect = (guest: Guest) => {
   selectedGuest.value = guest
   showConfirmation.value = !guest.hasResponded
-  showGuestList.value = false // Hide the guest list
-  searchQuery.value = '' // Clear the search field
+  showGuestList.value = false
+  searchQuery.value = ''
 }
 
 const handleRSVP = async (isAttending: boolean) => {
@@ -59,7 +57,6 @@ const handleRSVP = async (isAttending: boolean) => {
     isLoading.value = true
     await updateGuestResponse(selectedGuest.value.id, selectedGuest.value.name, isAttending)
     
-    // Update local state after successful API call
     const guest = guestList.value.find(g => g.id === selectedGuest.value?.id)
     if (guest) {
       guest.hasResponded = true
@@ -86,16 +83,15 @@ const resetSearch = () => {
 
 const handleChangeRSVP = () => {
   if (selectedGuest.value) {
-    // Allow the user to change their response
     showConfirmation.value = true
   }
 }
 </script>
 
 <template>
-  <v-container fluid class="fill-height">
+  <v-container fluid class="fill-height rsvp-container">
     <v-row justify="center" align="start">
-      <v-col>
+      <v-col cols="12" sm="10" md="8" lg="6" xl="5">
         <!-- Loading Overlay -->
         <v-overlay
           :model-value="isLoading"
@@ -119,76 +115,73 @@ const handleChangeRSVP = () => {
           {{ error }}
         </v-alert>
 
-        <!-- Main Card -->
-        <v-card class="mx-auto pa-6" elevation="3" min-height="400px">
-          <!-- Search Section -->
-          <v-card-item>
-            <!-- Only show title if no guest is selected -->
-            <v-card-title v-if="!selectedGuest" class="text-h3 text-center mb-6">
-              Confirme sua Presença
-            </v-card-title>
-            <v-card-text>
-              <!-- Only show search box if no guest is selected -->
-              <v-slide-y-transition>
-                <div v-if="!selectedGuest">
-                  <SearchBox
-                    v-model="searchQuery"
-                    placeholder="Seu nome aqui..."
-                    :disabled="isLoading"
-                  />
+        <!-- Header with Initials -->
+        <div class="header-initials">AM</div>
 
-                  <v-slide-y-transition>
-                    <template v-if="searchQuery && searchQuery.length >= 3">
-                      <div class="mt-4">
-                        <GuestList
-                          v-if="filteredGuests.length > 0 && showGuestList"
-                          :guests="filteredGuests"
-                          @select="handleGuestSelect"
-                        />
-                        <v-alert
-                          v-else
-                          type="info"
-                          variant="tonal"
-                          class="mt-4"
-                        >
-                          No matching guests found
-                        </v-alert>
-                      </div>
-                    </template>
-                    <template v-else-if="searchQuery && searchQuery.length < 3">
-                      <v-alert
-                        type="info"
-                        variant="tonal"
-                        class="mt-4"
-                      >
-                        Digite pelo menos 3 caracteres para buscar
-                      </v-alert>
-                    </template>
-                  </v-slide-y-transition>
-                </div>
+        <!-- Main Card -->
+        <v-card class="rsvp-card" elevation="0">
+          <!-- Search Section -->
+          <template v-if="!selectedGuest">
+            <v-card-title class="rsvp-title">
+              Confirme sua presença
+            </v-card-title>
+            <v-card-text class="pa-6">
+              <SearchBox
+                v-model="searchQuery"
+                placeholder="Confirme sua presença"
+                :disabled="isLoading"
+              />
+
+              <v-slide-y-transition>
+                <template v-if="searchQuery && searchQuery.length >= 3">
+                  <div class="mt-4">
+                    <GuestList
+                      v-if="filteredGuests.length > 0 && showGuestList"
+                      :guests="filteredGuests"
+                      @select="handleGuestSelect"
+                    />
+                    <v-alert
+                      v-else
+                      type="info"
+                      variant="tonal"
+                      class="mt-4"
+                    >
+                      Nenhum convidado encontrado
+                    </v-alert>
+                  </div>
+                </template>
+                <template v-else-if="searchQuery && searchQuery.length < 3">
+                  <v-alert
+                    type="info"
+                    variant="tonal"
+                    class="mt-4"
+                  >
+                    Digite pelo menos 3 caracteres para buscar
+                  </v-alert>
+                </template>
               </v-slide-y-transition>
             </v-card-text>
-          </v-card-item>
+          </template>
 
           <!-- RSVP Confirmation -->
           <v-slide-y-transition>
-            <v-card-item v-if="showConfirmation && selectedGuest">
+            <div v-if="showConfirmation && selectedGuest">
               <RsvpConfirmation
                 :guest="selectedGuest"
                 @respond="handleRSVP"
               />
-            </v-card-item>
+            </div>
           </v-slide-y-transition>
 
           <!-- Response Message -->
           <v-slide-y-transition>
-            <v-card-item v-if="selectedGuest?.hasResponded && !showConfirmation">
+            <div v-if="selectedGuest?.hasResponded && !showConfirmation">
               <ResponseMessage
                 :guest="selectedGuest"
                 @reset="resetSearch"
                 @change="handleChangeRSVP"
               />
-            </v-card-item>
+            </div>
           </v-slide-y-transition>
         </v-card>
       </v-col>
@@ -196,111 +189,52 @@ const handleChangeRSVP = () => {
   </v-container>
 </template>
 
-<style>
-.v-container {
+<style scoped>
+.rsvp-container {
   min-height: 100vh;
-  padding: 1rem;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
-.v-card {
-  width: 100%;
-  min-height: 400px;
-  margin: 0 auto;
-}
-
-.text-h3 {
-  font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
-  font-weight: 300;
+.header-initials {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 400;
+  text-align: center;
   color: #2c3e50;
-  line-height: 1.2;
-  padding: 0 0.5rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.2em;
 }
 
-.v-alert {
-  margin-bottom: 1rem;
+.rsvp-card {
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
 }
 
-.v-overlay__content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.rsvp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  text-align: center;
+  color: #2c3e50;
+  padding: 2rem 1rem 1rem;
 }
 
-:deep(.search-input) {
-  width: 100%;
-  max-width: none !important;
-}
-
-:deep(.v-card-text) {
-  position: relative;
-  padding: 0.75rem;
-}
-
-/* Mobile-specific styles */
 @media (max-width: 600px) {
-  .v-container {
-    padding: 0.5rem;
+  .rsvp-container {
+    padding: 1rem 0.5rem;
   }
 
-  .v-card {
-    border-radius: 8px;
-    min-height: 300px;
+  .header-initials {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
   }
 
-  .v-card.pa-6 {
-    padding: 1rem !important;
-  }
-
-  :deep(.v-card-title) {
-    font-size: 1.75rem !important;
-    margin-bottom: 1rem !important;
-    padding: 0 0.25rem;
-  }
-  
-  :deep(.v-btn) {
-    width: 100%;
-    margin: 0.25rem 0 !important;
-  }
-
-  :deep(.v-alert) {
-    font-size: 0.9rem;
-    margin-bottom: 0.75rem;
-  }
-
-  :deep(.v-overlay__content) {
-    padding: 1rem;
-  }
-}
-
-/* Extra small devices */
-@media (max-width: 400px) {
-  .v-container {
-    padding: 0.25rem;
-  }
-
-  .v-card.pa-6 {
-    padding: 0.75rem !important;
-  }
-
-  :deep(.v-card-title) {
-    font-size: 1.5rem !important;
-  }
-}
-
-/* Landscape mode on mobile */
-@media (max-width: 900px) and (max-height: 500px) {
-  .v-container {
-    padding: 0.5rem;
-  }
-
-  .v-card {
-    min-height: auto;
-  }
-
-  :deep(.v-card-title) {
-    font-size: 1.5rem !important;
-    margin-bottom: 0.75rem !important;
+  .rsvp-title {
+    font-size: 1.5rem;
+    padding: 1.5rem 1rem 0.75rem;
   }
 }
 </style>

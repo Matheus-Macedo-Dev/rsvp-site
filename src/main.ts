@@ -9,6 +9,12 @@ import '@mdi/font/css/materialdesignicons.css'
 import './style.css'
 import App from './App.vue'
 
+// Add Google Fonts
+const link = document.createElement('link')
+link.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap'
+link.rel = 'stylesheet'
+document.head.appendChild(link)
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -26,6 +32,8 @@ const vuetify = createVuetify({
         colors: {
           primary: '#42b883',
           secondary: '#35495e',
+          success: '#4caf50',
+          warning: '#ff9800',
         },
       },
     },
