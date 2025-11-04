@@ -93,8 +93,8 @@ const handleChangeRSVP = () => {
 
 <template>
   <v-container fluid class="fill-height rsvp-container">
-    <v-row justify="center" align="start">
-      <v-col cols="12" sm="10" md="8" lg="6" xl="5">
+    <v-row justify="center" align="start" class="content-row">
+      <v-col cols="12" sm="10" md="8" lg="6" xl="5" class="content-col">
         <!-- Loading Overlay -->
         <v-overlay
           :model-value="isLoading"
@@ -120,9 +120,11 @@ const handleChangeRSVP = () => {
 
         <!-- Header with Logo -->
         <div class="header-logo">
-          <img src="/wedding-logo.jpg" alt="AM Logo" class="logo-image" />
+          <img src="/wedding-logo.png" alt="AM Logo" class="logo-image" />
         </div>
 
+        <!-- Main Card Wrapper -->
+        <div class="card-wrapper">
         <!-- Main Card -->
         <v-card class="rsvp-card" elevation="0">
           <div class="card-content">
@@ -135,7 +137,7 @@ const handleChangeRSVP = () => {
               <v-card-text class="pa-6">
                 <SearchBox
                   v-model="searchQuery"
-                  placeholder="Confirme sua presença"
+                  placeholder="Digite seu nome..."
                   :disabled="isLoading"
                 />
 
@@ -193,6 +195,12 @@ const handleChangeRSVP = () => {
           </v-slide-y-transition>
           </div>
         </v-card>
+        </div>
+
+        <!-- Bottom Text -->
+        <div class="bottom-text">
+          Pedimos que confirme o mais rápido que puder, assim que tiver certeza!
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -201,13 +209,46 @@ const handleChangeRSVP = () => {
 <style scoped>
 .rsvp-container {
   min-height: 100vh;
-  padding: 2rem 1rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  max-height: 100vh;
+  padding: 0;
+  background: transparent !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-row {
+  flex: 1;
+  max-height: 100vh;
+}
+
+.content-col {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 0 !important;
+}
+
+:deep(.v-col) {
+  background: transparent !important;
+}
+
+:deep(.v-row) {
+  background: transparent !important;
+  flex: 1;
+}
+
+.rsvp-container > * {
+  position: relative;
+  z-index: 1;
+  
 }
 
 .header-logo {
   text-align: center;
-  padding: 2rem 1rem 1rem;
+  padding: 0.5rem 1rem 0.25rem;
   background: transparent;
   width: 100%;
   margin: 0;
@@ -215,10 +256,18 @@ const handleChangeRSVP = () => {
 }
 
 .logo-image {
-  max-width: 200px;
+  max-width: 100px;
   height: auto;
   display: inline-block;
   background: transparent;
+}
+
+.card-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .rsvp-card {
@@ -226,25 +275,15 @@ const handleChangeRSVP = () => {
   border-radius: 0;
   overflow: visible;
   box-shadow: none;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 100%;
 }
 
 .card-content {
-  padding: 2rem 1rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - 120px);
-}
-
-.search-card {
-  background: white;
-  border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 .search-card {
@@ -256,11 +295,27 @@ const handleChangeRSVP = () => {
 
 .rsvp-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 400;
   text-align: center;
   color: #2c3e50;
-  padding: 2rem 1rem 1rem;
+  padding: 1rem 1rem 0.75rem;
+}
+
+.bottom-text {
+  font-family: 'Silk Serif', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  text-align: center;
+  color: white;
+  padding: 0.75rem 1rem 3.5rem;
+  background: transparent;
+  width: 100%;
+  margin: 0;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  flex-shrink: 0;
 }
 
 @media (max-width: 600px) {
@@ -269,21 +324,25 @@ const handleChangeRSVP = () => {
   }
 
   .header-logo {
-    padding: 1.5rem 1rem;
+    padding: 0.5rem 1rem 0.25rem;
   }
 
   .logo-image {
-    max-width: 150px;
+    max-width: 80px;
   }
 
   .card-content {
-    padding: 1rem 0.5rem;
-    min-height: calc(100vh - 100px);
+    padding: 0.75rem 0.5rem;
   }
 
   .rsvp-title {
-    font-size: 1.5rem;
-    padding: 1.5rem 1rem 0.75rem;
+    font-size: 1.25rem;
+    padding: 0.75rem 1rem 0.5rem;
+  }
+
+  .bottom-text {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem 3rem;
   }
 }
 </style>

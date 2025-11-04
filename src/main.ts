@@ -10,10 +10,17 @@ import './style.css'
 import App from './App.vue'
 
 // Add Google Fonts
-const link = document.createElement('link')
-link.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap'
-link.rel = 'stylesheet'
-document.head.appendChild(link)
+const playfairLink = document.createElement('link')
+playfairLink.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap'
+playfairLink.rel = 'stylesheet'
+document.head.appendChild(playfairLink)
+
+// Add Silk Serif font (if using Adobe Fonts or similar service)
+// Note: You may need to add the actual font URL or upload font files
+const silkSerifLink = document.createElement('link')
+silkSerifLink.href = 'https://fonts.cdnfonts.com/css/silk-serif'
+silkSerifLink.rel = 'stylesheet'
+document.head.appendChild(silkSerifLink)
 
 const vuetify = createVuetify({
   components,
