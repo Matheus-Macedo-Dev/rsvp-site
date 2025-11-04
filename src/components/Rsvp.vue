@@ -7,6 +7,9 @@ import GuestList from './GuestList.vue'
 import RsvpConfirmation from './RsvpConfirmation.vue'
 import ResponseMessage from './ResponseMessage.vue'
 
+// Background image path
+const backgroundImage = '/wedding-background.jpg'
+
 const guestList = ref<Guest[]>([])
 const isLoading = ref(false)
 const error = ref<string | null>(null)
@@ -193,7 +196,13 @@ const handleChangeRSVP = () => {
 .rsvp-container {
   min-height: 100vh;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: transparent;
+  position: relative;
+}
+
+.rsvp-container > * {
+  position: relative;
+  z-index: 1;
 }
 
 .header-initials {

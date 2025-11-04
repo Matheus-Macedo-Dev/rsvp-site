@@ -63,11 +63,7 @@ const emit = defineEmits<{
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 600;
-}
-
-.header-label:last-child {
-  width: 40px;
-  text-align: center;
+  white-space: nowrap;
 }
 
 .guest-list {
@@ -103,9 +99,9 @@ const emit = defineEmits<{
 :deep(.v-list-item__append) {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  margin-left: 0;
+  justify-content: flex-end;
+  margin-left: auto;
+  padding-left: 16px;
 }
 
 @media (max-width: 600px) {

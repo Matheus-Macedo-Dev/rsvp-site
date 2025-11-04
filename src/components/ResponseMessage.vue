@@ -89,11 +89,13 @@ const handleImageError = (event: Event) => {
 
 .wedding-image {
   width: 100%;
-  max-width: 300px;
-  height: 200px;
-  object-fit: cover;
+  max-width: 400px;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
 }
 
 .response-card {

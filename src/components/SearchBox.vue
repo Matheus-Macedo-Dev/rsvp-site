@@ -45,12 +45,14 @@ const handleClear = () => {
   min-height: 56px;
   font-size: 16px;
   text-align: center;
-  color: #666;
+  color: #2c3e50;
+  font-weight: 500;
 }
 
 :deep(.v-field__input)::placeholder {
-  color: #999;
+  color: #555;
   text-align: center;
+  font-weight: 400;
 }
 
 :deep(.v-field--focused) {
