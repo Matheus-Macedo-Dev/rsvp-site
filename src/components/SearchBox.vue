@@ -37,7 +37,7 @@ const handleClear = () => {
 :deep(.v-field) {
   border-radius: 8px;
   background: transparent;
-  border-bottom: 2px solid #e0e0e0;
+  border: none;
 }
 
 :deep(.v-field__input) {
@@ -50,13 +50,13 @@ const handleClear = () => {
 }
 
 :deep(.v-field__input)::placeholder {
-  color: #555;
+  color: #999;
   text-align: center;
   font-weight: 400;
 }
 
 :deep(.v-field--focused) {
-  border-bottom-color: #42b883;
+  border: none;
 }
 
 :deep(.v-field__clearable) {

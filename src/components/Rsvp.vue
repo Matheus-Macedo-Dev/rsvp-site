@@ -125,16 +125,16 @@ const handleChangeRSVP = () => {
 
         <!-- Main Card Wrapper -->
         <div class="card-wrapper">
-        <!-- Main Card -->
-        <v-card class="rsvp-card" elevation="0">
-          <div class="card-content">
+        <!-- Main Content -->
+        <div class="rsvp-content">
+          <div class="content-inner">
           <!-- Search Section -->
           <template v-if="!selectedGuest">
             <div class="search-card">
-              <v-card-title class="rsvp-title">
+              <div class="rsvp-title">
                 Confirme sua presença
-              </v-card-title>
-              <v-card-text class="pa-6">
+              </div>
+              <div class="search-area">
                 <SearchBox
                   v-model="searchQuery"
                   placeholder="Digite seu nome..."
@@ -169,7 +169,7 @@ const handleChangeRSVP = () => {
                     </v-alert>
                   </template>
                 </v-slide-y-transition>
-              </v-card-text>
+              </div>
             </div>
           </template>
 
@@ -194,7 +194,7 @@ const handleChangeRSVP = () => {
             </div>
           </v-slide-y-transition>
           </div>
-        </v-card>
+        </div>
         </div>
 
         <!-- Bottom Text -->
@@ -270,15 +270,13 @@ const handleChangeRSVP = () => {
   padding: 1rem;
 }
 
-.rsvp-card {
+.rsvp-content {
   background: transparent;
-  border-radius: 0;
-  overflow: visible;
-  box-shadow: none;
   width: 100%;
+  max-width: 600px;
 }
 
-.card-content {
+.content-inner {
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -287,10 +285,14 @@ const handleChangeRSVP = () => {
 }
 
 .search-card {
-  background: white;
-  border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.search-area {
+  padding: 1.5rem 1rem;
 }
 
 .rsvp-title {
@@ -304,12 +306,12 @@ const handleChangeRSVP = () => {
 
 .bottom-text {
   font-family: 'Silk Serif', serif;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 400;
   font-style: italic;
   text-align: center;
-  color: white;
-  padding: 0.75rem 1rem 3.5rem;
+  color: #757c83;
+  padding: 0.75rem 1rem 5rem;
   background: transparent;
   width: 100%;
   margin: 0;
@@ -341,8 +343,8 @@ const handleChangeRSVP = () => {
   }
 
   .bottom-text {
-    font-size: 0.875rem;
-    padding: 0.5rem 1rem 3rem;
+    font-size: 1.125rem;
+    padding: 0.5rem 1rem 5rem;
   }
 }
 </style>
