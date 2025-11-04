@@ -4,7 +4,7 @@ import vuetify from 'vite-plugin-vuetify'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/rsvp-site/', // Update this to match your repository name
+  base: '/', // Updated for custom domain
   plugins: [
     vue(),
     vuetify({ autoImport: true }), // Enabled by default
