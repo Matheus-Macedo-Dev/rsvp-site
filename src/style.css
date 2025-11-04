@@ -28,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -63,6 +64,28 @@ button:focus-visible {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width: 100%;
+}
+
+/* Mobile-specific global styles */
+@media (max-width: 600px) {
+  body {
+    min-width: 320px;
+  }
+
+  #app {
+    max-width: 100%;
+    padding: 0.5rem;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  button {
+    min-height: 44px;
+    padding: 0.75em 1em;
+  }
 }
 
 @media (prefers-color-scheme: light) {

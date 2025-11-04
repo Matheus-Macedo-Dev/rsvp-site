@@ -28,20 +28,9 @@ const emit = defineEmits<{
           </v-icon>
         </template>
 
-        <v-list-item-title class="text-subtitle-1">
+        <v-list-item-title class="text-subtitle-1 guest-name">
           {{ guest.name }}
         </v-list-item-title>
-
-        <template v-slot:append>
-          <v-chip
-            v-if="guest.hasResponded"
-            :color="guest.isAttending ? 'success' : 'error'"
-            size="small"
-            class="ml-2"
-          >
-            {{ guest.isAttending ? 'Attending' : 'Not Attending' }}
-          </v-chip>
-        </template>
       </v-list-item>
     </v-list>
   </v-card>
@@ -66,7 +55,51 @@ const emit = defineEmits<{
   background-color: rgb(var(--v-theme-surface-variant));
 }
 
+.guest-name {
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.3;
+  padding-right: 0.5rem;
+}
+
 :deep(.v-list-item__content) {
   font-size: 1.1rem;
+  overflow: visible !important;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 600px) {
+  .guest-list-card {
+    max-height: 200px;
+  }
+
+  .guest-item {
+    min-height: 56px;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .guest-name {
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+
+  :deep(.v-list-item__content) {
+    font-size: 1rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  :deep(.v-list-item-title) {
+    font-size: 0.95rem !important;
+  }
+
+  :deep(.v-chip) {
+    font-size: 0.75rem;
+    height: 24px;
+  }
+
+  :deep(.v-icon) {
+    font-size: 20px;
+  }
 }
 </style>

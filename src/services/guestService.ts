@@ -10,6 +10,7 @@ export interface GuestResponse {
   hasResponded: boolean // 'Respondeu'
   isAttending: boolean // 'Confirmado'
   responseDate?: string // 'Data'
+  message?: string // 'Mensagem' - Personalized message
 }
 
 async function fetchWithRetry(
@@ -47,7 +48,8 @@ export async function fetchGuests(): Promise<GuestResponse[]> {
       name: guest.Nome || guest.name,
       hasResponded: Boolean(guest.Respondeu || guest.hasResponded),
       isAttending: Boolean(guest.Confirmado || guest.isAttending),
-      responseDate: guest.Data || guest.responseDate
+      responseDate: guest.Data || guest.responseDate,
+      message: guest.Mensagem || guest.message || ''
     }))
   } catch (error) {
     console.error('Error fetching guests:', error)

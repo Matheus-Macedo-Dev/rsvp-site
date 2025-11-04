@@ -29,7 +29,8 @@ onMounted(async () => {
 
 const filteredGuests = computed(() => {
   const query = searchQuery.value.toLowerCase().trim()
-  if (!query) return []
+  // Only search when 3 or more characters are entered
+  if (!query || query.length < 3) return []
   return guestList.value.filter(guest => 
     guest.name?.toLowerCase().includes(query)
   )
@@ -82,6 +83,13 @@ const resetSearch = () => {
   error.value = null
   showGuestList.value = true
 }
+
+const handleChangeRSVP = () => {
+  if (selectedGuest.value) {
+    // Allow the user to change their response
+    showConfirmation.value = true
+  }
+}
 </script>
 
 <template>
@@ -126,7 +134,7 @@ const resetSearch = () => {
               />
 
               <v-slide-y-transition>
-                <template v-if="searchQuery">
+                <template v-if="searchQuery && searchQuery.length >= 3">
                   <div class="mt-4">
                     <GuestList
                       v-if="filteredGuests.length > 0 && showGuestList"
@@ -142,6 +150,15 @@ const resetSearch = () => {
                       No matching guests found
                     </v-alert>
                   </div>
+                </template>
+                <template v-else-if="searchQuery && searchQuery.length < 3">
+                  <v-alert
+                    type="info"
+                    variant="tonal"
+                    class="mt-4"
+                  >
+                    Digite pelo menos 3 caracteres para buscar
+                  </v-alert>
                 </template>
               </v-slide-y-transition>
             </v-card-text>
@@ -159,10 +176,11 @@ const resetSearch = () => {
 
           <!-- Response Message -->
           <v-slide-y-transition>
-            <v-card-item v-if="selectedGuest?.hasResponded">
+            <v-card-item v-if="selectedGuest?.hasResponded && !showConfirmation">
               <ResponseMessage
                 :guest="selectedGuest"
                 @reset="resetSearch"
+                @change="handleChangeRSVP"
               />
             </v-card-item>
           </v-slide-y-transition>
@@ -220,7 +238,8 @@ const resetSearch = () => {
   }
 
   .v-card {
-    border-radius: 0;
+    border-radius: 8px;
+    min-height: 300px;
   }
 
   .v-card.pa-6 {
@@ -228,13 +247,54 @@ const resetSearch = () => {
   }
 
   :deep(.v-card-title) {
-    font-size: 1.5rem !important;
+    font-size: 1.75rem !important;
     margin-bottom: 1rem !important;
+    padding: 0 0.25rem;
   }
   
   :deep(.v-btn) {
     width: 100%;
     margin: 0.25rem 0 !important;
+  }
+
+  :deep(.v-alert) {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  :deep(.v-overlay__content) {
+    padding: 1rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 400px) {
+  .v-container {
+    padding: 0.25rem;
+  }
+
+  .v-card.pa-6 {
+    padding: 0.75rem !important;
+  }
+
+  :deep(.v-card-title) {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-width: 900px) and (max-height: 500px) {
+  .v-container {
+    padding: 0.5rem;
+  }
+
+  .v-card {
+    min-height: auto;
+  }
+
+  :deep(.v-card-title) {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
   }
 }
 </style>

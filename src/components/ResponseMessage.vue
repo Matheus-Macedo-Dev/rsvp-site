@@ -7,6 +7,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'reset'): void
+  (e: 'change'): void
 }>()
 </script>
 
@@ -28,14 +29,27 @@ const emit = defineEmits<{
           : "Estámos muito tristes que não poderá ir." }}
       </p>
       
-      <v-btn
-        color="primary"
-        variant="elevated"
-        prepend-icon="mdi-refresh"
-        @click="emit('reset')"
-      >
-        Buscar outro convidado
-      </v-btn>
+      <div class="button-group">
+        <v-btn
+          color="warning"
+          variant="elevated"
+          prepend-icon="mdi-pencil"
+          @click="emit('change')"
+          class="mb-2 change-btn"
+        >
+          Mudar Resposta
+        </v-btn>
+        
+        <v-btn
+          color="primary"
+          variant="outlined"
+          prepend-icon="mdi-magnify"
+          @click="emit('reset')"
+          class="search-btn"
+        >
+          Buscar Convidado
+        </v-btn>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -47,6 +61,21 @@ const emit = defineEmits<{
   padding: 2rem;
   background-color: #f8f9fa;
   border-radius: 8px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.change-btn :deep(.v-icon) {
+  font-size: 18px;
+}
+
+.search-btn :deep(.v-icon) {
+  font-size: 18px;
 }
 
 .btn-reset {
@@ -62,5 +91,42 @@ const emit = defineEmits<{
 
 .btn-reset:active {
   transform: scale(0.98);
+}
+
+/* Mobile-specific styles */
+@media (max-width: 600px) {
+  .response-card {
+    max-width: 100%;
+  }
+
+  :deep(.v-card-text) {
+    padding: 1.5rem 1rem !important;
+  }
+
+  :deep(.v-icon) {
+    font-size: 48px !important;
+    margin-bottom: 1rem !important;
+  }
+
+  :deep(.text-h4) {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  :deep(.text-subtitle-1) {
+    font-size: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  :deep(.v-btn) {
+    width: 100%;
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  .change-btn :deep(.v-icon),
+  .search-btn :deep(.v-icon) {
+    font-size: 18px;
+  }
 }
 </style>

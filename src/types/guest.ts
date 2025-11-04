@@ -4,4 +4,5 @@ export interface Guest {
   hasResponded: boolean // Maps to 'Respondeu'
   isAttending: boolean // Maps to 'Confirmado'
   responseDate?: string // Maps to 'Data'
+  message?: string // Maps to 'Mensagem' - Personalized message for the guest
 }

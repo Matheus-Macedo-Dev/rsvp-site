@@ -42,5 +42,27 @@ const handleClear = () => {
 :deep(.v-field__input) {
   padding: 12px !important;
   min-height: 56px !important;
+  font-size: 16px !important; /* Prevents iOS auto-zoom */
+}
+
+/* Mobile-specific styles */
+@media (max-width: 600px) {
+  .search-input {
+    max-width: 100%;
+  }
+
+  :deep(.v-field) {
+    font-size: 1rem;
+  }
+
+  :deep(.v-field__input) {
+    padding: 14px !important;
+    min-height: 48px !important;
+    font-size: 16px !important; /* Critical for iOS */
+  }
+
+  :deep(.v-icon) {
+    font-size: 24px;
+  }
 }
 </style>
