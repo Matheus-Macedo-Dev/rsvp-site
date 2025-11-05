@@ -14,8 +14,8 @@ const emit = defineEmits<{
   <div class="guest-list-container">
     <!-- Header Row -->
     <div class="guest-list-header">
-      <span class="header-label">Nome</span>
-      <span class="header-label">Resposta</span>
+      <span class="header-label header-nome">Nome</span>
+      <span class="header-label header-resposta">Resposta</span>
     </div>
 
     <!-- Guest List -->
@@ -48,15 +48,19 @@ const emit = defineEmits<{
 .guest-list-container {
   width: 100%;
   overflow-x: hidden;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .guest-list-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
   align-items: center;
   padding: 12px 16px;
   border-bottom: 2px solid #e0e0e0;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .header-label {
@@ -68,10 +72,22 @@ const emit = defineEmits<{
   white-space: nowrap;
 }
 
+.header-nome {
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-resposta {
+  text-align: right;
+  min-width: 80px;
+}
+
 .guest-list {
   padding: 0;
   background: transparent;
   width: 100%;
+  max-width: 100%;
 }
 
 .guest-item {
@@ -79,10 +95,10 @@ const emit = defineEmits<{
   padding: 16px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
   width: 100%;
   box-sizing: border-box;
+  max-width: 100%;
+  min-height: unset !important;
 }
 
 .guest-item:last-child {
@@ -97,25 +113,39 @@ const emit = defineEmits<{
   font-size: 1rem;
   color: #2c3e50;
   font-weight: 500;
-  flex: 1;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:deep(.v-list-item__content) {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 :deep(.v-list-item__append) {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-left: auto;
-  padding-left: 16px;
+  flex-shrink: 0;
+  min-width: 50px;
+  margin-left: 16px;
 }
 
 @media (max-width: 600px) {
   .guest-list-header {
     padding: 10px 12px;
+    gap: 12px;
   }
 
   .header-label {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
+  }
+
+  .header-resposta {
+    min-width: 60px;
   }
 
   .guest-item {
@@ -123,7 +153,12 @@ const emit = defineEmits<{
   }
 
   .guest-name {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  :deep(.v-list-item__append) {
+    min-width: 40px;
+    margin-left: 12px;
   }
 }
 </style>

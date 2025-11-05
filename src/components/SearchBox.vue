@@ -56,7 +56,7 @@ const handleClear = () => {
 }
 
 :deep(.v-field--focused) {
-  border-bottom-color: #42b883;
+  border-bottom-color: #1d3130;
 }
 
 :deep(.v-field__clearable) {

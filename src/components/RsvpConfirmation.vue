@@ -18,19 +18,18 @@ const emit = defineEmits<{
         
         <p class="confirmation-question">Você irá comparecer ao evento?</p>
         
-        <div class="button-group">
-          <v-btn
-            class="action-btn btn-yes"
-            @click="emit('respond', true, guest.name)"
-          >
-            Sim, Estarei lá
-          </v-btn>
-          
+        <div class="button-group">          
           <v-btn
             class="action-btn btn-no"
             @click="emit('respond', false, guest.name)"
           >
             Não Poderei Ir
+          </v-btn>
+          <v-btn
+            class="action-btn btn-yes"
+            @click="emit('respond', true, guest.name)"
+          >
+            Sim, Estarei lá
           </v-btn>
         </div>
       </v-card-text>

@@ -94,7 +94,7 @@ const handleChangeRSVP = () => {
 <template>
   <v-container fluid class="fill-height rsvp-container">
     <v-row justify="center" align="start" class="content-row">
-      <v-col cols="12" sm="10" md="8" lg="6" xl="5" class="content-col">
+      <v-col cols="12" sm="11" md="10" lg="9" xl="8" class="content-col">
         <!-- Loading Overlay -->
         <v-overlay
           :model-value="isLoading"
@@ -134,7 +134,7 @@ const handleChangeRSVP = () => {
               <v-card-title class="rsvp-title">
                 Confirme sua presença
               </v-card-title>
-              <v-card-text class="pa-6">
+              <v-card-text class="search-content">
                 <SearchBox
                   v-model="searchQuery"
                   placeholder="Digite seu nome..."
@@ -143,7 +143,7 @@ const handleChangeRSVP = () => {
 
                 <v-slide-y-transition>
                   <template v-if="searchQuery && searchQuery.length >= 3">
-                    <div class="mt-4">
+                    <div class="guest-list-wrapper">
                       <GuestList
                         v-if="filteredGuests.length > 0 && showGuestList"
                         :guests="filteredGuests"
@@ -248,7 +248,7 @@ const handleChangeRSVP = () => {
 
 .header-logo {
   text-align: center;
-  padding: 0.5rem 1rem 0.25rem;
+  padding-top: 3rem;
   background: transparent;
   width: 100%;
   margin: 0;
@@ -259,7 +259,6 @@ const handleChangeRSVP = () => {
   max-width: 100px;
   height: auto;
   display: inline-block;
-  background: transparent;
 }
 
 .card-wrapper {
@@ -289,24 +288,42 @@ const handleChangeRSVP = () => {
 .search-card {
   background: white;
   border-radius: 16px;
-  padding: 1rem;
+  padding: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .rsvp-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 400;
   text-align: center;
   color: #2c3e50;
-  padding: 1rem 1rem 0.75rem;
+  padding: 1.5rem 1.5rem 1rem;
+  display: block;
+  visibility: visible;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.search-content {
+  padding: 1.5rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.guest-list-wrapper {
+  margin-top: 1rem;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .bottom-text {
-  font-family: 'Silk Serif', serif;
   font-size: 1rem;
   font-weight: 400;
-  font-style: italic;
   text-align: center;
   color: white;
   padding: 0.75rem 1rem 3.5rem;
@@ -324,11 +341,11 @@ const handleChangeRSVP = () => {
   }
 
   .header-logo {
-    padding: 0.5rem 1rem 0.25rem;
+    padding-top: 3rem;
   }
 
   .logo-image {
-    max-width: 80px;
+    max-width: 100px;
   }
 
   .card-content {
@@ -338,6 +355,14 @@ const handleChangeRSVP = () => {
   .rsvp-title {
     font-size: 1.25rem;
     padding: 0.75rem 1rem 0.5rem;
+  }
+
+  .search-content {
+    padding: 1rem;
+  }
+
+  .guest-list-wrapper {
+    margin-top: 0.75rem;
   }
 
   .bottom-text {
