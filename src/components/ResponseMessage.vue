@@ -19,9 +19,11 @@ const emit = defineEmits<{
         <h2 class="response-title">Agradecemos sua resposta</h2>
         
         <p class="response-message">
-          {{ guest.isAttending 
-            ? "Estamos felizes por você participar desta data tão importante para a gente." 
-            : "Sentimos muito que você não poderá comparecer. Sabemos que imprevistos acontecem e saiba que você é muito especial para a gente." }}
+          {{ guest.isAttending && guest.message
+            ? guest.message
+            : guest.isAttending 
+              ? "Estamos felizes por você participar desta data tão importante para a gente." 
+              : "Sentimos muito que você não poderá comparecer. Sabemos que imprevistos acontecem e saiba que você é muito especial para a gente." }}
         </p>
 
         <!-- Guest Info -->

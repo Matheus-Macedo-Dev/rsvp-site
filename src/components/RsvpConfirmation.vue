@@ -16,16 +16,6 @@ const emit = defineEmits<{
       <v-card-text class="text-center pa-6">
         <h2 class="confirmation-title">Olá, {{ guest.name }}!</h2>
         
-        <v-alert
-          v-if="guest.message"
-          type="info"
-          variant="tonal"
-          class="my-4 personalized-message"
-          icon="mdi-message-text"
-        >
-          {{ guest.message }}
-        </v-alert>
-        
         <p class="confirmation-question">Você irá comparecer ao evento?</p>
         
         <div class="button-group">
