@@ -25,7 +25,6 @@ const handleClear = () => {
     clearable
     hide-details
     class="search-field"
-    :loading="disabled"
   />
 </template>
 
