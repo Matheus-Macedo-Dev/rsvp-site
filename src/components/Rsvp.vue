@@ -102,7 +102,7 @@ const handleChangeRSVP = () => {
         >
           <v-progress-circular
             indeterminate
-            color="primary"
+            color="black"
             size="64"
           />
         </v-overlay>
