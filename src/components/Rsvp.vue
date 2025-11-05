@@ -300,7 +300,7 @@ const handleChangeRSVP = () => {
   font-size: 2rem;
   font-weight: 400;
   text-align: center;
-  color: #2c3e50;
+  color: black;
   padding: 1.5rem 1.5rem 1rem;
   display: block;
   visibility: visible;
@@ -366,8 +366,8 @@ const handleChangeRSVP = () => {
   }
 
   .bottom-text {
-    font-size: 0.875rem;
-    padding: 0.5rem 1rem 3rem;
+    font-size: 1rem;
+    padding: 1rem 2rem 4rem;
   }
 }
 </style>
